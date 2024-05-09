@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Button, FloatButton, Space, Typography} from "antd";
-import {DownOutlined, HeartOutlined} from "@ant-design/icons";
+import {FileOutlined, HeartOutlined, HomeOutlined, QuestionOutlined} from "@ant-design/icons";
 
 import {Divider, Flex, Layout} from "antd";
 import {Content, Footer, Header} from "antd/es/layout/layout";
 
-import {Breadcrumb, Dropdown} from "antd";
+import {Breadcrumb, Dropdown, Menu} from "antd";
 
 function App() {
     const [editableStr, setEditableStr] = useState('Simple text');
@@ -20,18 +20,53 @@ function App() {
             label: (<a target="_blank" rel="noopener noreferrer" href="">FAQ</a>),
         },
     ];
+    const items = [
+        {
+            label: 'Home',
+            key: 'home',
+            icon: <HomeOutlined style={{color: 'white'}}/>,
+        },
+        {
+            label: 'Blog',
+            key: 'blog',
+            icon: <FileOutlined style={{color: 'white'}}/>,
+            children: [
+                {
+                    type: 'group',
+                    label: 'Article',
+                    children: [
+                        {
+                            label: 'Read all',
+                            key: 'setting:1',
+                        },
+                        {
+                            label: 'Search',
+                            key: 'setting:2',
+                        },
+                    ],
+                },
+                {
+                    label: 'My blog',
+                    key: 'setting:3',
+                },
+            ],
+        },
+    ];
 
   return (
-      <Layout style={{height: '100vh'}}>
-          <Header>
-              <Dropdown menu={{items: menuItems}}>
-                  <a onClick={(e) => e.preventDefault()}>
-                      <Space style={{color: 'white'}}>
-                          Get help
-                          <DownOutlined />
-                      </Space>
-                  </a>
-              </Dropdown>
+      <Layout >
+          <Header >
+              <Flex justify={"flex-start"} align={"center"} gap={10}>
+                  <Dropdown menu={{items: menuItems}}>
+                      <a onClick={(e) => e.preventDefault()}>
+                          <Space style={{color: 'white', width: 'max-content'}}>
+                              <QuestionOutlined />
+                              Get help
+                          </Space>
+                      </a>
+                  </Dropdown>
+                  <Menu items={items} mode='horizontal' className='menu' theme={'dark'}/>
+              </Flex>
           </Header>
           <Content style={{padding: '50px'}}>
               <Breadcrumb
