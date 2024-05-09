@@ -1,73 +1,23 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Button, FloatButton, Space, Typography} from "antd";
-import {FileOutlined, HeartOutlined, HomeOutlined, QuestionOutlined} from "@ant-design/icons";
+import {Button, FloatButton, Typography} from "antd";
+import { HeartOutlined} from "@ant-design/icons";
 
 import {Divider, Flex, Layout} from "antd";
-import {Content, Footer, Header} from "antd/es/layout/layout";
+import {Content, Footer} from "antd/es/layout/layout";
 
-import {Breadcrumb, Dropdown, Menu} from "antd";
+import {Breadcrumb} from "antd";
+import HeaderBlock from "./components/HeaderBlock/HeaderBlock";
+import FooterBlock from "./components/FooterBlock/FooterBlock";
 
 function App() {
     const [editableStr, setEditableStr] = useState('Simple text');
-    const menuItems = [
-        {
-            key: '1',
-            label: (<a href={""} target="_blank" rel="noopener noreferrer">Contact us</a>),
-        },
-        {
-            key: '2',
-            label: (<a target="_blank" rel="noopener noreferrer" href="">FAQ</a>),
-        },
-    ];
-    const items = [
-        {
-            label: 'Home',
-            key: 'home',
-            icon: <HomeOutlined style={{color: 'white'}}/>,
-        },
-        {
-            label: 'Blog',
-            key: 'blog',
-            icon: <FileOutlined style={{color: 'white'}}/>,
-            children: [
-                {
-                    type: 'group',
-                    label: 'Article',
-                    children: [
-                        {
-                            label: 'Read all',
-                            key: 'setting:1',
-                        },
-                        {
-                            label: 'Search',
-                            key: 'setting:2',
-                        },
-                    ],
-                },
-                {
-                    label: 'My blog',
-                    key: 'setting:3',
-                },
-            ],
-        },
-    ];
+
 
   return (
       <Layout >
-          <Header >
-              <Flex justify={"flex-start"} align={"center"} gap={10}>
-                  <Dropdown menu={{items: menuItems}}>
-                      <a onClick={(e) => e.preventDefault()}>
-                          <Space style={{color: 'white', width: 'max-content'}}>
-                              <QuestionOutlined />
-                              Get help
-                          </Space>
-                      </a>
-                  </Dropdown>
-                  <Menu items={items} mode='horizontal' className='menu' theme={'dark'}/>
-              </Flex>
-          </Header>
+          <HeaderBlock/>
+
           <Content style={{padding: '50px'}}>
               <Breadcrumb
                   items={[{title: 'Home'}, {title: <a href={''}>Layout</a>}, {title: 'Classic Layout'}]}
@@ -89,9 +39,9 @@ function App() {
 
                   <Divider children={'Divider text'}/>
               </div>
-
           </Content>
-          <Footer style={{textAlign: "center"}}>Trying ant design ©{new Date().getFullYear()}</Footer>
+
+          <FooterBlock/>
       </Layout>
 
   );
