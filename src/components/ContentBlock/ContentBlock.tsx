@@ -1,10 +1,63 @@
-import React, {useState} from 'react';
-import {Breadcrumb, Button, Divider, Flex, FloatButton, Input, Typography} from "antd";
-import {HeartOutlined} from "@ant-design/icons";
+import React, {useEffect, useState} from 'react';
+import {Breadcrumb, Button, Divider, Flex, Input, Typography} from "antd";
 import {Content} from "antd/es/layout/layout";
 
+export const getJSONFromStorage = (key: string): Array<IComment> => {
+    const serialized = localStorage.getItem(key);
+    if (serialized == null){
+        return [];
+    }
+    return JSON.parse(serialized);
+};
+
+export const setJSONToStorage = (key: string, value: string) => {
+    localStorage.setItem(key, value);
+}
+
+export interface IComment {
+    user: string;
+    text: string;
+}
+
+
 const ContentBlock = () => {
-    const [editableStr, setEditableStr] = useState('Simple text');
+    const commentsArr: Array<IComment> = [
+        {
+            'user': 'User name 1',
+            'text': 'Comment text'.repeat(5),
+        },
+        {
+            'user': 'User name 2',
+            'text': 'Comment text 2'.repeat(3),
+        },
+        {
+            'user': 'User name 3',
+            'text': 'Comment text 3 3',
+        },
+    ];
+    const [comments, setComments] = useState<Array<IComment>>(getJSONFromStorage('comments'));
+    const [commentText, setCommentText] = useState('');
+
+    useEffect(() => {
+        if (comments.length === 0) {
+            setJSONToStorage('comments', JSON.stringify(commentsArr));
+            setComments(commentsArr);
+        }
+    },[])
+
+    useEffect(() => {
+        setJSONToStorage('comments', JSON.stringify(comments));
+    },[comments])
+
+    const handleClick = () => {
+        const comment = {
+            user: 'user',
+            text: commentText,
+        };
+        setComments([...comments, comment]);
+        setCommentText('');
+    }
+
     return (
         <Content style={{padding: '50px'}}>
             <Breadcrumb
@@ -21,23 +74,22 @@ const ContentBlock = () => {
                 </Typography.Paragraph>
                 <Divider/>
 
-                <Input placeholder={'Type your comment'} style={{marginBottom: '10px'}}/>
-                <Button type={"primary"} style={{ background: "coral"}}>Leave comment</Button>
+                <Input
+                    placeholder={'Type your comment'}
+                    style={{marginBottom: '10px'}}
+                    onChange={(event) => setCommentText(event.target.value)}
+                    value={commentText}
+                />
+                <Button type={"primary"} style={{ background: "coral"}} onClick={handleClick}>Leave comment</Button>
                 <Divider/>
 
-                <Typography.Title level={5}>3 comments</Typography.Title>
-                <Flex vertical={true} justify={"flex-start"} align={"flex-start"} style={{marginBottom: '10px'}}>
-                    <Typography.Text strong={true}>User Name</Typography.Text>
-                    <Typography.Text>{'Comment text'.repeat(5)}</Typography.Text>
-                </Flex>
-                <Flex vertical={true} justify={"flex-start"} align={"flex-start"} style={{marginBottom: '10px'}}>
-                    <Typography.Text strong={true}>User Name 2</Typography.Text>
-                    <Typography.Text>{'Comment text 22'.repeat(5)}</Typography.Text>
-                </Flex>
-                <Flex vertical={true} justify={"flex-start"} align={"flex-start"} style={{marginBottom: '10px'}}>
-                    <Typography.Text strong={true}>User Name 3</Typography.Text>
-                    <Typography.Text>{'Comment text 333'.repeat(5)}</Typography.Text>
-                </Flex>
+                <Typography.Title level={5}>{comments.length} comments</Typography.Title>
+                {comments.map((comment,index) => (
+                    <Flex vertical={true} justify={"flex-start"} align={"flex-start"} style={{marginBottom: '10px'}} key={index}>
+                        <Typography.Text strong={true}>{comment.user}</Typography.Text>
+                        <Typography.Text>{comment.text}</Typography.Text>
+                    </Flex>
+                ))}
             </div>
         </Content>
     );
