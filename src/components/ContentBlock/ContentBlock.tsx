@@ -37,6 +37,7 @@ const ContentBlock = () => {
     ];
     const [comments, setComments] = useState<Array<IComment>>(getJSONFromStorage('comments'));
     const [commentText, setCommentText] = useState('');
+    const [user, setUser] = useState('');
 
     useEffect(() => {
         if (comments.length === 0) {
@@ -51,11 +52,12 @@ const ContentBlock = () => {
 
     const handleClick = () => {
         const comment = {
-            user: 'user',
+            user: user,
             text: commentText,
         };
         setComments([...comments, comment]);
         setCommentText('');
+        setUser('')
     }
 
     return (
@@ -74,11 +76,20 @@ const ContentBlock = () => {
                 </Typography.Paragraph>
                 <Divider/>
 
+                <Typography.Text>User name:</Typography.Text>
                 <Input
+                    placeholder={'Type your name'}
+                    style={{marginBottom: '10px'}}
+                    value={user}
+                    onChange={(event) => setUser(event.target.value)}
+                />
+                <Typography.Text>Comment:</Typography.Text>
+                <Input.TextArea
                     placeholder={'Type your comment'}
                     style={{marginBottom: '10px'}}
                     onChange={(event) => setCommentText(event.target.value)}
                     value={commentText}
+                    autoSize={{ minRows: 2, maxRows: 8 }}
                 />
                 <Button type={"primary"} style={{ background: "coral"}} onClick={handleClick}>Leave comment</Button>
                 <Divider/>
