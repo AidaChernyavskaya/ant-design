@@ -31,7 +31,8 @@ const CommentForm: FC<ICommentForm> = ({comments, setComments}) => {
             onFinish={handleClick}
             style={{maxWidth: 600}}
             form={form}
-
+            labelCol={{span: 4}}
+            wrapperCol={{span: 16}}
         >
             <Form.Item
                 label={'User name:'}
@@ -66,7 +67,7 @@ const CommentForm: FC<ICommentForm> = ({comments, setComments}) => {
                     autoSize={{ minRows: 2, maxRows: 8 }}
                 />
             </Form.Item>
-            <Form.Item>
+            <Form.Item wrapperCol={{offset: 4, span: 16}}>
                 <Button
                     type={"primary"}
                     style={{ background: "coral"}}
