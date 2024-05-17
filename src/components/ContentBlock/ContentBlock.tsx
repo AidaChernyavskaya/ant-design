@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Breadcrumb, Button, Divider, Flex, Input, Typography} from "antd";
+import {Breadcrumb, Button, Divider, Flex, Form, Input, Typography} from "antd";
 import {Content} from "antd/es/layout/layout";
+import {Simulate} from "react-dom/test-utils";
+import reset = Simulate.reset;
+import {useForm} from "antd/es/form/Form";
+import CommentForm from "../CommentForm/CommentForm";
 
 export const getJSONFromStorage = (key: string): Array<IComment> => {
     const serialized = localStorage.getItem(key);
@@ -19,7 +23,6 @@ export interface IComment {
     text: string;
 }
 
-
 const ContentBlock = () => {
     const commentsArr: Array<IComment> = [
         {
@@ -36,8 +39,7 @@ const ContentBlock = () => {
         },
     ];
     const [comments, setComments] = useState<Array<IComment>>(getJSONFromStorage('comments'));
-    const [commentText, setCommentText] = useState('');
-    const [user, setUser] = useState('');
+
 
     useEffect(() => {
         if (comments.length === 0) {
@@ -50,15 +52,6 @@ const ContentBlock = () => {
         setJSONToStorage('comments', JSON.stringify(comments));
     },[comments])
 
-    const handleClick = () => {
-        const comment = {
-            user: user,
-            text: commentText,
-        };
-        setComments([...comments, comment]);
-        setCommentText('');
-        setUser('')
-    }
 
     return (
         <Content style={{padding: '50px'}}>
@@ -76,22 +69,7 @@ const ContentBlock = () => {
                 </Typography.Paragraph>
                 <Divider/>
 
-                <Typography.Text>User name:</Typography.Text>
-                <Input
-                    placeholder={'Type your name'}
-                    style={{marginBottom: '10px'}}
-                    value={user}
-                    onChange={(event) => setUser(event.target.value)}
-                />
-                <Typography.Text>Comment:</Typography.Text>
-                <Input.TextArea
-                    placeholder={'Type your comment'}
-                    style={{marginBottom: '10px'}}
-                    onChange={(event) => setCommentText(event.target.value)}
-                    value={commentText}
-                    autoSize={{ minRows: 2, maxRows: 8 }}
-                />
-                <Button type={"primary"} style={{ background: "coral"}} onClick={handleClick}>Leave comment</Button>
+                <CommentForm comments={comments} setComments={setComments}/>
                 <Divider/>
 
                 <Typography.Title level={5}>{comments.length} comments</Typography.Title>
