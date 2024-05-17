@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Breadcrumb, Button, Divider, Flex, Form, Input, Typography} from "antd";
+import {Breadcrumb, Button, Col, Divider, Flex, Form, Input, Rate, Row, Typography} from "antd";
 import {Content} from "antd/es/layout/layout";
 import {Simulate} from "react-dom/test-utils";
 import reset = Simulate.reset;
 import {useForm} from "antd/es/form/Form";
 import CommentForm from "../CommentForm/CommentForm";
+import {HeartFilled} from "@ant-design/icons";
 
 export const getJSONFromStorage = (key: string): Array<IComment> => {
     const serialized = localStorage.getItem(key);
@@ -21,6 +22,7 @@ export const setJSONToStorage = (key: string, value: string) => {
 export interface IComment {
     user: string;
     text: string;
+    rate: number;
 }
 
 const ContentBlock = () => {
@@ -28,14 +30,17 @@ const ContentBlock = () => {
         {
             'user': 'User name 1',
             'text': 'Comment text'.repeat(5),
+            'rate': 5,
         },
         {
             'user': 'User name 2',
             'text': 'Comment text 2'.repeat(3),
+            'rate': 1,
         },
         {
             'user': 'User name 3',
             'text': 'Comment text 3 3',
+            'rate': 5,
         },
     ];
     const [comments, setComments] = useState<Array<IComment>>(getJSONFromStorage('comments'));
@@ -76,6 +81,7 @@ const ContentBlock = () => {
                 {comments.map((comment,index) => (
                     <Flex vertical={true} justify={"flex-start"} align={"flex-start"} style={{marginBottom: '10px'}} key={index}>
                         <Typography.Text strong={true}>{comment.user}</Typography.Text>
+                        <Rate disabled defaultValue={comment.rate} character={<HeartFilled/>} style={{color: 'coral'}}/>
                         <Typography.Text>{comment.text}</Typography.Text>
                     </Flex>
                 ))}

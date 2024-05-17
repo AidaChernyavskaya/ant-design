@@ -1,7 +1,8 @@
 import React, {FC, useState} from 'react';
-import {Button, Form, Input} from "antd";
+import {Button, Form, Input, Rate} from "antd";
 import {useForm} from "antd/es/form/Form";
 import {IComment} from "../ContentBlock/ContentBlock";
+import {HeartFilled} from "@ant-design/icons";
 
 export interface ICommentForm {
     comments: Array<IComment>;
@@ -12,15 +13,18 @@ const CommentForm: FC<ICommentForm> = ({comments, setComments}) => {
     const [form] = useForm();
     const [commentText, setCommentText] = useState('');
     const [user, setUser] = useState('');
+    const [rate, setRate] = useState(0);
 
     const handleClick = () => {
         const comment = {
             user: user,
             text: commentText,
+            rate: rate,
         };
         setComments([...comments, comment]);
         setCommentText('');
         setUser('');
+        setRate(0);
         form.resetFields();
     }
 
@@ -50,6 +54,7 @@ const CommentForm: FC<ICommentForm> = ({comments, setComments}) => {
                     onChange={(event) => setUser(event.target.value)}
                 />
             </Form.Item>
+
             <Form.Item
                 label={'Comment:'}
                 name={'comment'}
@@ -67,6 +72,11 @@ const CommentForm: FC<ICommentForm> = ({comments, setComments}) => {
                     autoSize={{ minRows: 2, maxRows: 8 }}
                 />
             </Form.Item>
+
+            <Form.Item label={'Rate:'} name={'rate'}>
+                <Rate character={<HeartFilled/>} style={{color: 'coral'}} defaultValue={rate} onChange={(value)=>setRate(value)}/>
+            </Form.Item>
+
             <Form.Item wrapperCol={{offset: 4, span: 16}}>
                 <Button
                     type={"primary"}
