@@ -23,6 +23,7 @@ export interface IComment {
     user: string;
     text: string;
     rate: number;
+    date: string;
 }
 
 const ContentBlock = () => {
@@ -31,16 +32,19 @@ const ContentBlock = () => {
             'user': 'User name 1',
             'text': 'Comment text'.repeat(5),
             'rate': 5,
+            'date': 'October 1, 2023',
         },
         {
             'user': 'User name 2',
             'text': 'Comment text 2'.repeat(3),
             'rate': 1,
+            'date': 'December 30, 2023',
         },
         {
             'user': 'User name 3',
             'text': 'Comment text 3 3',
             'rate': 5,
+            'date': 'March 15, 2024',
         },
     ];
     const [comments, setComments] = useState<Array<IComment>>(getJSONFromStorage('comments'));
@@ -81,6 +85,7 @@ const ContentBlock = () => {
                 {comments.map((comment,index) => (
                     <Flex vertical={true} justify={"flex-start"} align={"flex-start"} style={{marginBottom: '10px'}} key={index}>
                         <Typography.Text strong={true}>{comment.user}</Typography.Text>
+                        <Typography.Text style={{color: "grey"}}>{comment.date}</Typography.Text>
                         <Rate disabled defaultValue={comment.rate} character={<HeartFilled/>} style={{color: 'coral'}}/>
                         <Typography.Text>{comment.text}</Typography.Text>
                     </Flex>

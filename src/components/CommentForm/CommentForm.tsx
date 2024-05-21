@@ -3,6 +3,7 @@ import {Button, Form, Input, Rate} from "antd";
 import {useForm} from "antd/es/form/Form";
 import {IComment} from "../ContentBlock/ContentBlock";
 import {HeartFilled} from "@ant-design/icons";
+import moment from "moment";
 
 export interface ICommentForm {
     comments: Array<IComment>;
@@ -20,6 +21,7 @@ const CommentForm: FC<ICommentForm> = ({comments, setComments}) => {
             user: user,
             text: commentText,
             rate: rate,
+            date: moment().format('LL'),
         };
         setComments([...comments, comment]);
         setCommentText('');
