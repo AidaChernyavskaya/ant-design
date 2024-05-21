@@ -63,7 +63,7 @@ const ContentBlock = () => {
 
 
     return (
-        <Content style={{padding: '50px'}}>
+        <Content className={'content'}>
             <Breadcrumb
                 items={[{title: 'Home'}, {title: <a href={''}>All articles</a>}, {title: 'Article name'}]}
                 style={{marginBottom: '20px'}}
@@ -83,10 +83,19 @@ const ContentBlock = () => {
 
                 <Typography.Title level={5}>{comments.length} comments</Typography.Title>
                 {comments.map((comment,index) => (
-                    <Flex vertical={true} justify={"flex-start"} align={"flex-start"} style={{marginBottom: '10px'}} key={index}>
-                        <Typography.Text strong={true}>{comment.user}</Typography.Text>
-                        <Typography.Text style={{color: "grey"}}>{comment.date}</Typography.Text>
-                        <Rate disabled defaultValue={comment.rate} character={<HeartFilled/>} style={{color: 'coral'}}/>
+                    <Flex
+                        vertical={true} justify={"flex-start"} align={"flex-start"}
+                        style={{marginBottom: '10px', width: '100%'}} key={index}
+                    >
+                        <Flex justify={"space-between"} align={"center"} style={{width: '100%'}}>
+                            <Flex vertical={true} justify={"flex-start"} align={"flex-start"}>
+                                <Typography.Text strong={true}>{comment.user}</Typography.Text>
+                                <Typography.Text type={"secondary"}>{comment.date}</Typography.Text>
+                            </Flex>
+                            <Flex justify={"flex-end"} align={"center"}>
+                                <Rate disabled defaultValue={comment.rate} character={<HeartFilled/>} style={{color: 'coral'}}/>
+                            </Flex>
+                        </Flex>
                         <Typography.Text>{comment.text}</Typography.Text>
                     </Flex>
                 ))}
