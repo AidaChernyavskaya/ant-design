@@ -75,7 +75,16 @@ const CommentForm: FC<ICommentForm> = ({comments, setComments}) => {
                 />
             </Form.Item>
 
-            <Form.Item label={'Rate:'} name={'rate'}>
+            <Form.Item
+                label={'Rate:'}
+                name={'rate'}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please rate article!',
+                    },
+                ]}
+            >
                 <Rate character={<HeartFilled/>} style={{color: 'coral'}} defaultValue={rate} onChange={(value)=>setRate(value)}/>
             </Form.Item>
 
