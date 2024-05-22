@@ -1,48 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Breadcrumb, Button, Col, Divider, Flex, Form, Input, Rate, Row, Typography} from "antd";
+import {Breadcrumb, Divider, Flex, Rate, Typography} from "antd";
 import {Content} from "antd/es/layout/layout";
-import {Simulate} from "react-dom/test-utils";
-import reset = Simulate.reset;
-import {useForm} from "antd/es/form/Form";
 import CommentForm from "../CommentForm/CommentForm";
-import {HeartFilled} from "@ant-design/icons";
-
-export const getJSONFromStorage = (key: string): Array<IComment> => {
-    const serialized = localStorage.getItem(key);
-    if (serialized == null){
-        return [];
-    }
-    return JSON.parse(serialized);
-};
-
-export const setJSONToStorage = (key: string, value: string) => {
-    localStorage.setItem(key, value);
-}
-
-export interface IComment {
-    user: string;
-    text: string;
-    rate: number;
-}
+import Comment from "../Comment/Comment";
+import {IComment} from "../../interface";
+import {getJSONFromStorage, setJSONToStorage} from "../../localStorage";
+import {commentsArr} from "../../data";
 
 const ContentBlock = () => {
-    const commentsArr: Array<IComment> = [
-        {
-            'user': 'User name 1',
-            'text': 'Comment text'.repeat(5),
-            'rate': 5,
-        },
-        {
-            'user': 'User name 2',
-            'text': 'Comment text 2'.repeat(3),
-            'rate': 1,
-        },
-        {
-            'user': 'User name 3',
-            'text': 'Comment text 3 3',
-            'rate': 5,
-        },
-    ];
     const [comments, setComments] = useState<Array<IComment>>(getJSONFromStorage('comments'));
 
 
@@ -59,7 +24,7 @@ const ContentBlock = () => {
 
 
     return (
-        <Content style={{padding: '50px'}}>
+        <Content className={'content'}>
             <Breadcrumb
                 items={[{title: 'Home'}, {title: <a href={''}>All articles</a>}, {title: 'Article name'}]}
                 style={{marginBottom: '20px'}}
@@ -79,11 +44,7 @@ const ContentBlock = () => {
 
                 <Typography.Title level={5}>{comments.length} comments</Typography.Title>
                 {comments.map((comment,index) => (
-                    <Flex vertical={true} justify={"flex-start"} align={"flex-start"} style={{marginBottom: '10px'}} key={index}>
-                        <Typography.Text strong={true}>{comment.user}</Typography.Text>
-                        <Rate disabled defaultValue={comment.rate} character={<HeartFilled/>} style={{color: 'coral'}}/>
-                        <Typography.Text>{comment.text}</Typography.Text>
-                    </Flex>
+                    <Comment comment={comment} index={index}/>
                 ))}
             </div>
         </Content>
