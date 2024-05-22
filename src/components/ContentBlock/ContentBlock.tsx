@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Breadcrumb, Divider, Flex, Rate, Typography} from "antd";
 import {Content} from "antd/es/layout/layout";
 import CommentForm from "../CommentForm/CommentForm";
-import {HeartFilled} from "@ant-design/icons";
+import Comment from "../Comment/Comment";
 import {IComment} from "../../interface";
 import {getJSONFromStorage, setJSONToStorage} from "../../localStorage";
 import {commentsArr} from "../../data";
@@ -44,21 +44,7 @@ const ContentBlock = () => {
 
                 <Typography.Title level={5}>{comments.length} comments</Typography.Title>
                 {comments.map((comment,index) => (
-                    <Flex
-                        vertical={true} justify={"flex-start"} align={"flex-start"}
-                        style={{marginBottom: '10px', width: '100%'}} key={index}
-                    >
-                        <Flex justify={"space-between"} align={"center"} style={{width: '100%'}}>
-                            <Flex vertical={true} justify={"flex-start"} align={"flex-start"}>
-                                <Typography.Text strong={true}>{comment.user}</Typography.Text>
-                                <Typography.Text type={"secondary"}>{comment.date}</Typography.Text>
-                            </Flex>
-                            <Flex justify={"flex-end"} align={"center"}>
-                                <Rate disabled defaultValue={comment.rate} character={<HeartFilled/>} style={{color: 'coral'}}/>
-                            </Flex>
-                        </Flex>
-                        <Typography.Text>{comment.text}</Typography.Text>
-                    </Flex>
+                    <Comment comment={comment} index={index}/>
                 ))}
             </div>
         </Content>

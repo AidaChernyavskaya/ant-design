@@ -9,3 +9,9 @@ export interface ICommentForm {
     comments: Array<IComment>;
     setComments: Function;
 }
+
+
+export interface ICommentEl {
+    comment: IComment;
+    index: number;
+}
