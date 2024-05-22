@@ -1,52 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Breadcrumb, Button, Col, Divider, Flex, Form, Input, Rate, Row, Typography} from "antd";
+import {Breadcrumb, Divider, Flex, Rate, Typography} from "antd";
 import {Content} from "antd/es/layout/layout";
-import {Simulate} from "react-dom/test-utils";
-import reset = Simulate.reset;
-import {useForm} from "antd/es/form/Form";
 import CommentForm from "../CommentForm/CommentForm";
 import {HeartFilled} from "@ant-design/icons";
-
-export const getJSONFromStorage = (key: string): Array<IComment> => {
-    const serialized = localStorage.getItem(key);
-    if (serialized == null){
-        return [];
-    }
-    return JSON.parse(serialized);
-};
-
-export const setJSONToStorage = (key: string, value: string) => {
-    localStorage.setItem(key, value);
-}
-
-export interface IComment {
-    user: string;
-    text: string;
-    rate: number;
-    date: string;
-}
+import {IComment} from "../../interface";
+import {getJSONFromStorage, setJSONToStorage} from "../../localStorage";
+import {commentsArr} from "../../data";
 
 const ContentBlock = () => {
-    const commentsArr: Array<IComment> = [
-        {
-            'user': 'User name 1',
-            'text': 'Comment text'.repeat(5),
-            'rate': 5,
-            'date': 'October 1, 2023',
-        },
-        {
-            'user': 'User name 2',
-            'text': 'Comment text 2'.repeat(3),
-            'rate': 1,
-            'date': 'December 30, 2023',
-        },
-        {
-            'user': 'User name 3',
-            'text': 'Comment text 3 3',
-            'rate': 5,
-            'date': 'March 15, 2024',
-        },
-    ];
     const [comments, setComments] = useState<Array<IComment>>(getJSONFromStorage('comments'));
 
 
