@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.db215bc8.css",
-    "main.js": "/static/js/main.cc8c6d24.js",
-    "index.html": "/index.html",
-    "main.db215bc8.css.map": "/static/css/main.db215bc8.css.map",
-    "main.cc8c6d24.js.map": "/static/js/main.cc8c6d24.js.map"
+    "main.css": "/ant-design/static/css/main.db215bc8.css",
+    "main.js": "/ant-design/static/js/main.cc8c6d24.js",
+    "index.html": "/ant-design/index.html",
+    "main.db215bc8.css.map": "/ant-design/static/css/main.db215bc8.css.map",
+    "main.cc8c6d24.js.map": "/ant-design/static/js/main.cc8c6d24.js.map"
   },
   "entrypoints": [
     "static/css/main.db215bc8.css",
